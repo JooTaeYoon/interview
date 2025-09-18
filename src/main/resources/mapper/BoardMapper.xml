@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reactive.memo.mapper.BoardMapper">
+
+
+    <select id="boardList" resultType="reactive.memo.dto.BoardDto">
+        SELECT * FROM
+        board
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="sumBoard" resultType="int">
+        SELECT COUNT(*) FROM board
+    </select>
+
+    <insert id="save" parameterType="reactive.memo.dto.BoardDto">
+        INSERT INTO board (content, title, writer) VALUES(#{content}, #{title} , #{writer})
+    </insert>
+
+    <select id="read" resultType="reactive.memo.dto.BoardDto">
+        SELECT * FROM board
+    </select>
+
+    <select id="getOne" resultType="reactive.memo.dto.BoardDto" parameterType="long">
+        SELECT * FROM board WHERE id = #{id}
+    </select>
+
+    <delete id="deleteBoard" parameterType="long">
+        DELETE FROM board WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="reactive.memo.dto.BoardDto">
+        UPDATE board SET content = #{content}, title = #{title}, writer = #{writer} WHERE id = #{id}
+    </update>
+
+</mapper>
