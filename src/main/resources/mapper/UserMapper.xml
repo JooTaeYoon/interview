@@ -5,12 +5,25 @@
 
 <mapper namespace="reactive.memo.mapper.UserMapper">
 
+    <resultMap id="UserHistoryResultMap" type="reactive.memo.dto.UserHistoryDto">
+        <result property="userName" column="name"/>
+        <result property="questionContent" column="content"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+
     <insert id="saveUser">
         INSERT INTO users (name, password) VALUES(#{name}, #{password})
     </insert>
 
     <select id="findByUser" parameterType="string" resultType="reactive.memo.dto.UserDto">
         SELECT id, name, password FROM users WHERE name = #{name}
+    </select>
+
+    <select id="getHistory" resultType="reactive.memo.dto.UserHistoryDto" parameterType="long">
+        SELECT us.name AS userName, qu.content AS questionContent, ca.name AS categoryName FROM users us INNER JOIN practice_history ph ON us.id = ph.user_id
+        INNER JOIN question qu ON qu.id = ph.question_id
+        LEFT JOIN category ca ON ca.id = qu.category_id
+        WHERE us.id = #{id}
     </select>
 
 </mapper>

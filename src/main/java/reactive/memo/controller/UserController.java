@@ -4,10 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactive.memo.config.JwtTokenProvider;
 import reactive.memo.dto.UserDto;
 import reactive.memo.service.UserService;
@@ -60,5 +57,15 @@ public class UserController {
         UserDto login = userService.login(userDto);
         String jwtToken = jwtTokenProvider.createToken(String.valueOf(login.getId()), login.getRole());
         return new ResponseEntity<>(jwtToken, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/history")
+    public ResponseEntity<?> userHistory(@PathVariable Long id) {
+        log.info("| id >>> {} |",id);
+        Map<String, Object> history = userService.getHistory(id);
+        if (history != null) {
+            return new ResponseEntity<>(history, HttpStatus.OK);
+        } else return new ResponseEntity<>(history.put("result", "fail"), HttpStatus.OK);
+
     }
 }

@@ -4,7 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactive.memo.dto.UserDto;
+import reactive.memo.dto.UserHistoryDto;
 import reactive.memo.mapper.UserMapper;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -44,5 +49,13 @@ public class UserService {
             throw new IllegalAccessException("비밀번호가 틀렸습니다");
         }
         return userDto1;
+    }
+
+    public Map<String, Object> getHistory(Long id){
+        Map<String, Object> result = new HashMap<>();
+        List<UserHistoryDto> history = userMapper.getHistory(id);
+        log.info("| | history >>> {} | |",history);
+        result.put("result", history);
+        return result;
     }
 }
