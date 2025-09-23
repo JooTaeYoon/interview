@@ -19,3 +19,6 @@ jwt:
   secretKey: bXlTZWNyZXRLZXkxMjM0NTY3ODkwbXlTZWNyZXRLZXkxMjM0NTY3OD321k
   expiration: 360000
 
+logging:
+  level:
+    org.mybatis: debug

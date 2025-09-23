@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FavoriteDto {
 
-    private int id;
-    private int userId;
-    private int questionId;
+    private long id;
+    private long userId;
+    private long questionId;
 
 }

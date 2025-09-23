@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reactive.memo.mapper.FavoriteMapper">
+
+    <resultMap id="practiceHistoryResultMap" type="reactive.memo.dto.PracticeHistoryDto">
+        <!-- practice_history PK -->
+        <id property="id" column="ph_id"/>
+        <!-- snake_case 컬럼을 명확히 지정 -->
+        <result property="userId" column="user_id"/>
+        <result property="questionId" column="question_id"/>
+    </resultMap>
+
+    <update id="like" parameterType="long">
+        UPDATE question q
+        JOIN practice_history ph ON ph.question_id = q.id
+        JOIN users us ON us.id = ph.user_id
+        SET q.favorite_count = q.favorite_count + 1
+        WHERE us.id = #{id}
+    </update>
+
+    <update id="unlike" parameterType="long">
+        UPDATE question q
+        JOIN practice_history ph ON ph.question_id = q.id
+        JOIN users us ON us.id = ph.user_id
+        SET q.favorite_count = q.favorite_count - 1
+        WHERE us.id = #{id}
+    </update>
+
+    <select id="getQuestionId" resultMap="practiceHistoryResultMap" parameterType="long">
+        SELECT
+            ph.id          AS ph_id,
+            ph.user_id     AS user_id,
+            ph.question_id AS question_id
+        FROM users us
+        JOIN practice_history ph ON us.id = ph.user_id
+        JOIN question qu ON qu.id = ph.question_id
+        WHERE us.id = #{id}
+    </select>
+
+    <insert id="likeFavorite" parameterType="reactive.memo.dto.PracticeHistoryDto">
+        INSERT INTO favorite (user_id, question_id) VALUES (#{userId}, #{questionId})
+    </insert>
+
+        <delete id="unlikeFavorite" parameterType="reactive.memo.dto.PracticeHistoryDto">
+                DELETE FROM favorite
+                WHERE user_id = #{userId}                    
+        </delete>
+
+</mapper>

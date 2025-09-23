@@ -9,7 +9,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class BoardDto {
-    private int id;
+    private long id;
     private String title;
     private String writer;
     private String content;

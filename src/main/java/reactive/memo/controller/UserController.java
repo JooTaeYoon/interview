@@ -1,6 +1,7 @@
 package reactive.memo.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,11 +62,14 @@ public class UserController {
 
     @GetMapping("/{id}/history")
     public ResponseEntity<?> userHistory(@PathVariable Long id) {
-        log.info("| id >>> {} |",id);
+        log.info("| id >>> {} |", id);
         Map<String, Object> history = userService.getHistory(id);
         if (history != null) {
             return new ResponseEntity<>(history, HttpStatus.OK);
         } else return new ResponseEntity<>(history.put("result", "fail"), HttpStatus.OK);
-
     }
+
+
+
+
 }

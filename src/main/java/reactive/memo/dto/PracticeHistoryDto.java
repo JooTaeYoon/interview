@@ -1,20 +1,20 @@
 package reactive.memo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
-@Data
+
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 public class PracticeHistoryDto {
 
     private long id;
-    private int userId;
+    private long userId;
     private int questionId;
     private Date practicedAt;
 }
