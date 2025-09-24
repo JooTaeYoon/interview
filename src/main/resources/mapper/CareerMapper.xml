@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reactive.memo.mapper.CareerMapper">
+
+    <resultMap id="CareerDtoResultMap" type="reactive.memo.dto.CareerDto">                
+        <result property="mainTask" column="main_task"/>
+        <result property="userId" column="user_id"></result>
+    </resultMap>
+
+    <select id="getCareer" resultMap="CareerDtoResultMap" parameterType="long">    
+        SELECT user_no.id AS id,
+        user_no.user_id AS userId,
+        user_no.company_name AS companyName,
+        project.name AS name,
+        project.members AS members,
+        project.main_task AS mainTask,
+        project.duration AS duration,
+        project.details AS details
+        FROM user_no 
+        LEFT JOIN project ON project.user_id = user_no.user_id
+        WHERE user_no.user_id = #{id}
+    </select>
+  
+</mapper>

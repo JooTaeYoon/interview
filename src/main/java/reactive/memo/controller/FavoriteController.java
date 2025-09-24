@@ -42,7 +42,7 @@ public class FavoriteController {
 
         int unlike = favoriteService.unlike(id);
         if (unlike == 1) {
-            result.put("result", "okd");
+            result.put("result", "ok");
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
         return new ResponseEntity<>(Map.of("result", "fail"), HttpStatus.OK);
